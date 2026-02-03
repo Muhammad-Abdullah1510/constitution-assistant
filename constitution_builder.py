@@ -28,7 +28,7 @@ UPLOAD_TO_VECTORDB = False   # FIRST TIME = True
 
 # ===== STEP 1: LOAD & CHUNK PDF =====
 def process_pdf():
-    print("📘 Processing Constitution PDF...")
+    print("Processing Constitution PDF...")
     loader = UnstructuredPDFLoader(PDF_PATH)
     documents = loader.load()
 
@@ -42,7 +42,7 @@ def process_pdf():
     with open(CHUNKS_CACHE_PATH, "wb") as f:
         pickle.dump(split_docs, f)
 
-    print(f"✅ {len(split_docs)} chunks created and cached.")
+    print(f"{len(split_docs)} chunks created and cached.")
     return split_docs
 
 
@@ -53,7 +53,7 @@ def load_chunks():
     with open(CHUNKS_CACHE_PATH, "rb") as f:
         docs = pickle.load(f)
 
-    print(f"📦 Loaded {len(docs)} cached chunks.")
+    print(f"Loaded {len(docs)} cached chunks.")
     return docs
 
 
@@ -62,7 +62,7 @@ split_docs = process_pdf() if PROCESS_PDF else load_chunks()
 
 # ===== STEP 2: EMBEDDINGS + VECTOR STORE =====
 def setup_vector_store(docs, upload=False):
-    print("🔢 Creating embeddings...")
+    print("Creating embeddings...")
     embedding_model = HuggingFaceEmbeddings(model_name=EMBEDDING_MODEL)
 
     endpoint = os.getenv("ZILLIZ_ENDPOINT")
@@ -72,7 +72,7 @@ def setup_vector_store(docs, upload=False):
         raise ValueError("Missing Zilliz credentials in .env")
 
     if upload:
-        print("⬆ Uploading to Zilliz (first time only)...")
+        print("Uploading to Zilliz (first time only)...")
         vector_store = Milvus.from_documents(
             documents=docs,
             embedding=embedding_model,
@@ -80,7 +80,7 @@ def setup_vector_store(docs, upload=False):
             collection_name=COLLECTION_NAME,
             drop_old=False,
         )
-        print("✅ Upload complete.")
+        print("Upload complete.")
     else:
         vector_store = Milvus(
             embedding_function=embedding_model,
@@ -95,7 +95,7 @@ vector_store = setup_vector_store(split_docs, upload=UPLOAD_TO_VECTORDB)
 
 
 # ===== STEP 3: RETRIEVER (MMR + COMPRESSION) =====
-print("🔍 Setting up retriever...")
+print("Setting up retriever...")
 
 base_retriever = vector_store.as_retriever(
     search_type="mmr",
@@ -147,7 +147,7 @@ rag_chain = (
     | StrOutputParser()
 )
 
-print("🤖 RAG system ready!\n")
+print("RAG system ready!\n")
 
 
 # ===== STEP 5: TEST =====
