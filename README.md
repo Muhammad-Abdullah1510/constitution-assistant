@@ -1,8 +1,3 @@
-Ah! I see a few **formatting issues** in your README that we should fix. Right now, the Markdown code blocks and headings are broken, which will make it look messy on GitHub. Let me clean it up for you.
-
-Here’s the **correct version**:
-
-````markdown
 # Constitution Assistant ⚖️
 
 An AI-powered assistant that answers questions about the **Pakistan Constitution** in **student-friendly language**. Built with **Streamlit**, **LangChain**, **Groq**, and **Zilliz (Milvus)**.
@@ -71,8 +66,3 @@ streamlit run constitution_app.py
 * Virtual environments (`.venv`) are **ignored** in GitHub
 * Pickle/cache files (`*.pkl`) are also ignored
 * Chat history is maintained **only in the session**, not in the vector database
-
-````
-
----
-
