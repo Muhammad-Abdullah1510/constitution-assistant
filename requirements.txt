@@ -1,0 +1,24 @@
+# Core LangChain stack
+langchain
+langchain-core
+langchain-community
+langchain-text-splitters
+langchain-classic
+
+# LLM + Embeddings
+langchain-groq
+langchain-huggingface
+sentence-transformers
+
+# Vector DB (Zilliz / Milvus)
+pymilvus
+
+# PDF loading
+unstructured[pdf]
+pypdf
+
+# App UI
+streamlit
+
+# Utilities
+python-dotenv
